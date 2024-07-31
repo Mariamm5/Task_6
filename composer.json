@@ -1,0 +1,15 @@
+{
+    "name": "user/task_6",
+    "autoload": {
+        "psr-4": {
+            "User\\Task6\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mariamm5",
+            "email": "mariam.mariam.mirzoyan@mail.ru"
+        }
+    ],
+    "require": {}
+}
