@@ -1,16 +1,16 @@
 <?php
-require __DIR__ . '/../../Database.inc';
-require __DIR__ . '/../models/OrderModel.php';
+
+namespace User\Task6\Controllers;
+
+use User\Task6\Database;
+use User\Task6\Models\OrderModel;
 
 class OrdersController
 {
-
     private $orderModel;
-
 
     public function __construct()
     {
-
         $dataBase = new Database();
         $this->orderModel = new OrderModel($dataBase->getConnection());
     }
@@ -27,12 +27,12 @@ class OrdersController
             $quantity = $_POST['quantity'];
             $book_id = $id;
             $this->orderModel->addOrder($full_name, $email, $number, $city, $address, $postal, $quantity, $book_id);
-
         }
     }
 
     public function getOrderInfo()
     {
+        $_SESSION['orders'] = $this->orderModel->getOrderInfo();
         return $this->orderModel->getOrderInfo();
     }
 

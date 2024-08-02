@@ -1,5 +1,8 @@
 <?php
-session_start();
+
+namespace User\Task6\Models;
+
+use PDO;
 
 class BookModel
 {
@@ -8,7 +11,6 @@ class BookModel
     public function __construct($conn)
     {
         $this->conn = $conn;
-
     }
 
     public function getAllBooks()
@@ -18,7 +20,6 @@ class BookModel
         $stmt->execute();
         $data = $stmt->fetchAll(PDO::FETCH_ASSOC);
         return $data;
-
     }
 
     public function getBookById($id)
@@ -55,7 +56,7 @@ class BookModel
     public function saveEditedBook($newTitle, $newAuthor, $newDescription, $newPrice, $newImg_path, $id)
     {
         $query = "UPDATE books SET 
-                         title=:newTitle,author=:newAuthor,
+                        title=:newTitle,author=:newAuthor,
                         description=:newDescription,
                         price=:newPrice,
                         image_path=:newImg_path
@@ -72,12 +73,9 @@ class BookModel
 
     public function deleteBook($id)
     {
-
         $stmt = $this->conn->prepare("DELETE FROM books WHERE id = :id");
         $stmt->bindParam(':id', $id);
         return $stmt->execute();
-
     }
-
 
 }

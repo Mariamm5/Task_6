@@ -1,5 +1,6 @@
 <?php
-
+namespace User\Task6\Models;
+use PDO;
 class OrderModel
 {
     private $conn;
@@ -10,16 +11,20 @@ class OrderModel
 
     }
 
-    public function addCart($book_id, $book_title, $book_price, $quantity)
+    public function addOrder($full_name, $email, $number, $city, $address, $postal, $quantity, $book_id)
     {
-        $query = "INSERT INTO cart (book_id, book_title, book_price, quantity)
-              VALUES (:id, :title, :price, :quantity)";
+        $query = "INSERT INTO orders (full_name, email,number, city,address,postal,quantity,book_id)
+              VALUES (:full_name, :email, :number, :city,:address,:postal,:quantity,:book_id)";
         $stmt = $this->conn->prepare($query);
 
-        $stmt->bindParam(":id", $book_id);
-        $stmt->bindParam(":title", $book_title);
-        $stmt->bindParam(":price", $book_price);
+        $stmt->bindParam(":full_name", $full_name);
+        $stmt->bindParam(":email", $email);
+        $stmt->bindParam(":number", $number);
+        $stmt->bindParam(":city", $city);
+        $stmt->bindParam(":address", $address);
+        $stmt->bindParam(":postal", $postal);
         $stmt->bindParam(":quantity", $quantity);
+        $stmt->bindParam(":book_id", $book_id);
         return $stmt->execute();
     }
 

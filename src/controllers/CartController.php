@@ -1,6 +1,10 @@
 <?php
-require __DIR__ . '/../../Database.inc';
-require __DIR__ . '/../models/CartModel.php';
+
+namespace User\Task6\Controllers;
+session_start();
+
+use User\Task6\Database;
+use User\Task6\Models\CartModel;
 
 class CartController
 {
@@ -10,31 +14,24 @@ class CartController
 
     public function __construct()
     {
-
         $this->database = new Database();
-        $this->cartModel = new CartModel($this->database);
-
+        $conn = $this->database->getConnection();
+        $this->cartModel = new CartModel($conn);
     }
 
     public function addCart()
     {
-        if (isset($_POST['id']) && isset($_POST['title']) && isset($_POST['price'])) {
-            $id = $_POST['id'];
-            $title = $_POST['title'];
-            $price = $_POST['price'];
-            $quantity = isset($_POST['quantity']);
-
-            // Log data for debugging
-            error_log("ID: $id, Title: $title, Price: $price, Quantity: $quantity");
-
-            if ($this->cartModel->addCart($id, $title, $price, $quantity)) {
-                echo json_encode(['success' => true, 'message' => 'Book added to cart.']);
-            } else {
-                echo json_encode(['success' => false, 'message' => 'Failed to add book to cart.']);
-            }
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Missing parameters.']);
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $bookId = $_POST['id'];
+            $bookTitle = $_POST['title'];
+            $bookPrice = $_POST['price'];
+            $this->cartModel->addCart($bookId, $bookTitle, $bookPrice, 1);
         }
     }
 
+    public function getCart()
+    {
+        $carts = $this->cartModel->getCart();
+        $_SESSION['carts'] = $carts;
+    }
 }

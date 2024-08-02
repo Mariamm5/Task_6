@@ -1,8 +1,6 @@
 <?php
 session_start();
-include_once __DIR__ . '/../controllers/BooksController.php';
 $books = $_SESSION['books'];
-global $id;
 if (isset($_SESSION['admin'])):
     ?>
     <!doctype html>

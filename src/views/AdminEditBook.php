@@ -1,6 +1,5 @@
 <?php
 session_start();
-//$_SESSION['book_id']=$_POST['book_id'];
 if(isset($_SESSION['admin'])): ?>
 
     <!doctype html>
@@ -19,6 +18,7 @@ if(isset($_SESSION['admin'])): ?>
         <h1 class="mb-4">Edit Book</h1>
         <form action="/admin/booksList/editBook" method="POST" enctype="multipart/form-data">
             <h2>Book ID is: <?=  $_POST['book_id'] ?></h2>
+            <span style="display: none"> <?php  $_SESSION["book_id"] = $_POST['book_id']?></span>
             <div class="form-group">
                 <label for="newTitle">Book Title</label>
                 <input type="text" class="form-control" id="newTitle" name="newTitle" placeholder="Enter new title"

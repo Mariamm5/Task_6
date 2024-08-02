@@ -1,4 +1,6 @@
 <?php
+
+namespace User\Task6\Controllers;
 session_start();
 
 class AdminController
@@ -27,25 +29,11 @@ class AdminController
         include __DIR__ . "/../views/Dashboard.php";
     }
 
-    public function addedBook()
-    {
-        echo
-        "<script>
-        alert('Book added successfully!');
-         </script>";
-        include __DIR__ . '/../views/AdminBooksList.php';
-
-    }
-
     public function logout()
     {
         unset($_SESSION['admin']);
         session_destroy();
         header("Location:/admin/login");
     }
-
-//    public function booksList(){
-//
-//    }
 
 }

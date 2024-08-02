@@ -2,8 +2,7 @@
     "name": "user/task_6",
     "autoload": {
         "psr-4": {
-            "User\\Task6\\": "src/"
-        }
+            "User\\Task6\\": "src/"        }
     },
     "authors": [
         {

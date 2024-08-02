@@ -1,18 +1,20 @@
 <?php
+
+namespace User\Task6\Controllers;
 session_start();
-require __DIR__ . '/../../Database.inc';
-require __DIR__ . '/../models/BookModel.php';
+
+use User\Task6\Database;
+use User\Task6\Models\BookModel;
 
 class BooksController
 {
-    private $bookModel;
-
+    private  $bookModel;
 
     public function __construct()
     {
-
         $dataBase = new Database();
-        $this->bookModel = new BookModel($dataBase->getConnection());
+        $con = $dataBase->getConnection();
+        $this->bookModel = new BookModel($con);
     }
 
     public function getAllBooks()
@@ -32,6 +34,7 @@ class BooksController
         $_SESSION['bookById'] = $this->bookModel->getBookById($id);
         require __DIR__ . '/../views/BookInfo.php';
     }
+
     public
     function editBook()
     {
@@ -42,11 +45,9 @@ class BooksController
         }
     }
 
-
     public
     function saveEditBook()
     {
-
         if (isset($_POST['edited'])) {
             if (isset($_FILES['newImg'])) {
                 $id = $_SESSION["book_id"];
@@ -59,18 +60,11 @@ class BooksController
                 move_uploaded_file($_FILES['newImg']['tmp_name'], $newImgPath);
                 $this->bookModel->saveEditedBook($newTitle, $newAuthor, $newDescription, $newPrice, $newImgPath, $id);
             }
-            echo
-            "<script>
-                     alert('Book updated successfully!');
-                </script>";
             header("Location:/admin/dashboard/adminBooksList");
         }
-
-
     }
 
-    public
-    function deleteBook()
+    public function deleteBook()
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['book_id'])) {
             $bookId = $_POST['book_id'];
@@ -86,8 +80,7 @@ class BooksController
         }
     }
 
-    public
-    function addBook()
+    public function addBook()
     {
         if (isset($_POST['addBook'])) {
             $title = $_POST['title'];
@@ -101,21 +94,7 @@ class BooksController
                 $imgPath = $uploadDir . basename($_FILES['img']['name']);
                 move_uploaded_file($_FILES['img']['tmp_name'], $imgPath);
             }
-            if ($this->bookModel->addBook($title, $author, $description, $price, $imgPath)) {
-                echo
-                "<script>
-            alert('Book added successfully!');
-                </script>";
-                header("Location:/admin/dashboard/adminBooksList");
-            } else {
-                echo "Failed to add book.";
-            }
-
-
+            $this->bookModel->addBook($title, $author, $description, $price, $imgPath);
         }
-
-
     }
-
-
 }

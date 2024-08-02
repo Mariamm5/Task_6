@@ -45,11 +45,6 @@ session_start();
         <div class="form-group">
             <input type="reset" class="btn btn-secondary btn-block" value="Reset All">
         </div>
-        <?php
-        if(isset($_GET['id'])){
-            $_SESSION['order_book_id'] = $_GET['id'];
-        }
-        ?>
         <button type="submit" class="btn btn-primary btn-block" name="order">Order</button>
     </form>
 </div>

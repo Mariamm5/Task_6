@@ -1,8 +1,6 @@
 <?php
 session_start();
-include_once __DIR__ . '/../controllers/BooksController.php';
 $books = $_SESSION['books'];
-global $id;
 ?>
 <!doctype html>
 <html lang="en">
@@ -96,39 +94,35 @@ global $id;
 <?php endforeach; ?>
 </div>
 </div>
-
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"></script>
 <script src="https://unpkg.com/ionicons@4.5.10-0/dist/ionicons.js"></script>
 <script>
     $(document).ready(function () {
-        $(document).on('click', '.add-to-cart', function () {
-            let bookId = $(this).data('id');
-            let bookTitle = $(this).data('title');
-            let bookPrice = $(this).data('price');
-            let quantity = 1;
+        $('.add-to-cart').on('click', function (e) {
+            e.preventDefault();
+            const bookId = $(this).data('id');
+            const bookTitle = $(this).data('title');
+            const bookPrice = $(this).data('price');
 
             $.ajax({
-                url: '/books/addtocart',
+                url: 'http://task6/books/addtocart',
                 type: 'POST',
                 data: {
                     id: bookId,
                     title: bookTitle,
-                    price: bookPrice,
-                    quantity: quantity
+                    price: bookPrice
                 },
-                success: function (response) {
-                    console.log(response);
+                success: function () {
+                    alert("Added to cart!");
                 },
                 error: function () {
-                    alert('Error adding book to cart.');
+                    alert("Error adding to cart");
                 }
+
             });
         });
     });
-
-
 </script>
-
 </body>
 </html>
